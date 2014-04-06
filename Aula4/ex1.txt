@@ -1,0 +1,22 @@
+Ricardo Boccoli Gallego
+
+
+Classe: Vehicle
+Atributos: model, year, color
+Métodos: deliver, search
+
+Classe: Customer
+Atributos: name, cpf, date_of_birth
+Métodos: order, search
+
+Classe: Load
+Atributos: items, total_weight
+Métodos: calculate_weight
+
+Classe: Item
+Atributos: description, weight, price
+Métodos: search
+
+Classe: Freight
+Atributos: load, vehicle, total_price, customer, delivery_date
+Métodos: calculate_price, get_freights, search_freight
