@@ -48,8 +48,7 @@ def links
   m = Mechanize.new
 
   # Baixa a página principal, que tem todos os links.
-  #m.get('http://en.wikipedia.org/wiki/List_of_programming_languages')
-  m.get('http://en.wikipedia.org/wiki/The_Pretender_(Foo_Fighters_song)')
+  m.get('http://en.wikipedia.org/wiki/List_of_programming_languages')
   links = m.page.links.
     map { |link| link.href }.
     select { |path| path =~ /\A\/wiki/ }.
@@ -224,20 +223,20 @@ end
 #-------------------------------------------------------------
 #
 #       user     system      total        real
-#   5.690000   0.460000   6.150000 (140.695997)
-#   5.710000   0.480000   6.190000 ( 69.901333)
-#   5.850000   0.700000   6.550000 ( 88.766079)
+#   3.640000   0.060000   3.700000 (  6.780568)
+#   3.600000   0.220000   3.820000 (  4.262991)
+#   3.830000   0.300000   4.130000 (  4.159513)
 
 #Execução dos programas 'CPU-intensive (cálculo de fatorial)':
 #-------------------------------------------------------------
 #
 #       user     system      total        real
-#   9.680000   0.130000   9.810000 ( 15.643872)
-#  39.070000   0.380000  39.450000 ( 52.799375)
-#   9.720000   0.110000   9.830000 ( 10.390308)
+#   11.780000   0.290000  12.070000 ( 12.081777)
+#   44.260000   1.110000  45.370000 ( 45.515203)
+#   45.170000   0.780000  45.950000 ( 45.990917)
 
 # É possível concluir que no download de arquivos há uma melhora com
-# o aumento de threads, mas o ideal é não criarmos muitas threads
+# o aumento de threads.
 
-# Já no cálculo do fatorial, quanto mais threads melhor!
+# Já no cálculo do fatorial, o ideal é termos poucas threads
 
