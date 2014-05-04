@@ -1,0 +1,35 @@
+#campos_considerados
+{
+  background-color: rgba(97, 118, 172, .2);
+  padding:10px 10px;
+  margin-bottom:10px;
+}
+
+
+#texto_busca {
+  width:100%;
+}
+
+.campo_vazio {
+  color: rgba(0, 0, 0, .4);
+  font-style:italic;
+}
+
+
+#resultados h2
+{
+  font-size:24px;
+}
+
+.voltar
+{
+	text-align: right;
+}
+
+#inner_resultados
+{
+	background-color: rgba(97, 118, 172, .13);
+	padding:20px;
+	border-left: solid 8px rgba(97, 118, 172, 1);
+
+}

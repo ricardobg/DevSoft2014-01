@@ -32,3 +32,4 @@ $(function() {
   $('.welcome span').eq(0).fadeIn(200, showNextToken);
 
 });
+
