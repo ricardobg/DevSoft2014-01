@@ -6,8 +6,10 @@ require 'json'
 ################################################
 ##           !USE YOUR CREDENTIALS            ##
 ################################################
-USERNAME = 'XXXXXX' # Use your username!
-PASSWORD = 'XXXXXX' # Use your password!
+USERNAME = 'aluno' # Use your username!
+PASSWORD = '12345' # Use your password!
+MAX_SEARCH = 2000  # Max number of searched jobs
+N_THREADS = MAX_SEARCH/20
 JSON_LOCATION = 'my_json.json'
 #
 # Helper function that saves a HTML file on the html directory.
@@ -78,22 +80,21 @@ puts 'Searching for jobs...'
 
 ## Navigate to list of internship
 
-mechanize.get("http://estagios.pcs.usp.br/aluno/vagas/listarVagasCadastradas.aspx");
-
-save_html('internship_list', mechanize.page.body);
 
 job_list = []
-doc = mechanize.page.parser
-selector = '#ContentPlaceHolder1_grdVagas tr td[1]'
-doc.css(selector).each do |line|
-    job = Job.new(line)
+
+for i in 0..(MAX_SEARCH-1)
+    job = Job.new(i.to_s)
     job_list << job
 end
 
-puts job_list.length.to_s + ' jobs found!'
+puts 'Looking for ' + job_list.length.to_s + ' jobs'
 puts 'Loading jobs...'
 # Load each internship data
+
+porcentagem = 0.00;
 job_list.each do |job|
+    print "\r" + porcentagem.to_s + "%";
     mechanize.get("http://estagios.pcs.usp.br/aluno/vagas/exibirVaga.aspx?id=" + job.code)
     doc = mechanize.page.parser
     selector = 'div.formulario[1] table tr'
@@ -103,7 +104,9 @@ job_list.each do |job|
             job.data[job_data.at('td[1]').text.strip] = job_data.at('td[2]').text.strip
         end
     end
+    porcentagem += 100.0/MAX_SEARCH;
 end
+puts "\n100%"
 
 #
 #  ALL DATA LOADED
@@ -114,14 +117,14 @@ puts 'Generating JSON...'
 #  CREATE JSON
 #
 return_json = '{'
+return_json += '"data_coleta": "' + Time.now.strftime("%d/%m/%Y") + '",';
+return_json += '"paginas_acessadas": "' + MAX_SEARCH.to_s + '",';
 job_list.each do |job|
    return_json += '"' + job.code + '":'
    return_json += JSON.generate(job.data)
    return_json += ','
 end
-if (return_json != '}')
-    return_json = return_json[0..-2]
-end
+return_json = return_json[0..-2]
 return_json += '}'
 
 #

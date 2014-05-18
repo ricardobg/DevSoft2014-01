@@ -66,8 +66,8 @@
   <div id="main-content">
     <h2>Distribuição de vagas por data de publicação</h2>
     <p>
-      Data Inicial: 20/04/2014 <br>
-      Data Final: 04/05/2014 <br>
+      Data Inicial: <span id="data_inicial">?</span> <br>
+      Data Final: <span id="data_final">?</span>  <br>
     </p>
     <div id="div_chart">
       <h2>Vagas por período</h2> 
@@ -81,7 +81,7 @@
           <div  class="col-md-6">
           </div>
           <div  class="col-md-6">
-            <input type="checkbox"  value="mes" id="agrupamento"> Mês <br>
+            <input type="radio"  value="mes" name="agrupamento"> Mês <br>
           </div>
         </div>
         <div  class="row">
@@ -89,14 +89,14 @@
             Agrupamento:&nbsp;&nbsp;
           </div>
           <div  class="col-md-6">
-            <input type="checkbox" value="quadrimestre" checked id="agrupamento"> Quadrimestre <br>
+            <input type="radio" value="quadrimestre" checked name="agrupamento"> Quadrimestre <br>
           </div>
         </div>
         <div  class="row">
           <div  class="col-md-6">
           </div>
           <div  class="col-md-6">
-            <input type="checkbox"  value="ano" id="agrupamento"> Ano <br>
+            <input type="radio"  value="ano" name="agrupamento"> Ano <br>
           </div>
         </div>
       </div>

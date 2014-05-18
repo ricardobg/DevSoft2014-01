@@ -16,3 +16,18 @@ function campo_blur(e, texto) {
     e.className = e.className + ' campo_vazio';
   }
 }
+
+// Function to load JSON (my_json.json)
+function load_json(function_to_receive_data)
+{
+	//$.getJSON("my_json.json",function_to_receive_data);
+	$.ajax({
+    type: 'GET',
+    url: "my_json.json",
+    dataType: 'json',
+    success: function_to_receive_data,
+    data: {},
+    async: true
+});
+}
+
