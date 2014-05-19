@@ -51,7 +51,6 @@ header nav {
   margin-top:10px;
   border-top: solid 1px rgba( 160,160,160, .2);
   border-bottom: solid 1px rgba( 160,160,160, .2);
-
 }
 
 .item-menu {
@@ -83,6 +82,7 @@ div.item-selecionado:hover {
 .item-menu a {
   text-decoration: none;
   color:inherit;
+  font-size:12px;
 }
 .item-menu a:hover {
   text-decoration: none;

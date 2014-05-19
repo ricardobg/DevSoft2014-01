@@ -105,19 +105,25 @@
           <input onfocus="campo_focus(this,'Digite o termo de busca')" onblur="campo_blur(this, 'Digite o termo de busca')" name="texto_busca" id="texto_busca" class="campo_vazio" type="text" maxlength="200" value="Digite o termo de busca">
         </div>
         <div class="col-md-3">
-          <input type="submit" value="Pesquisar" >
+          <input type="button" value="Pesquisar" onclick="search();">
         </div>
       </div>
     </form>
-    <div id="resultados">
+    <div class="inv" id="pesquisando">
+      <h4>Pesquisando...</h4>
+    </div>
+    <div style="visibility:hidden;display:none;" id="resultados">
        <h2>Resultados</h2>
        <p>
-        Tempo de Busca: 5s <br>
-        Vagas encontradas: 50
+        Tempo de Busca: <span id="tempo_busca"></span> <br>
+        Vagas encontradas: <span id="vagas_encontradas"></span> 
        </p>
-       <p>
+       <p  style="visibility:hidden;display:none;"  id="muitos_resultados">
         Muitos resultados encontrados. Faça uma nova pesquisa para refinar os resultados.
        </p>
+       <div style="visibility:hidden;display:none;"  id="inner_resultados">
+        
+       </div>
     </div>
   </div>
 
@@ -140,6 +146,7 @@
   <!-- Project's JavaScript files -->
   <script src="javascripts/main.js"></script>
   <script src="javascripts/example.js"></script>
+  <script src="javascripts/busca.js"></script>
 
 </body>
 </html>
