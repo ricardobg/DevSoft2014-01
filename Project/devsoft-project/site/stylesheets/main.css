@@ -40,5 +40,15 @@ body {
   display: none;
 }
 
+#pesquisando
+{
+  text-align:center;
+  padding-top: 10px;
+}
 
-
+#carregando
+{
+  text-align:center;
+  padding-top:30px;
+  padding-bottom:30px;
+}

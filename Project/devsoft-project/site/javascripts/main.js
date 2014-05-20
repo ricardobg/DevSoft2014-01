@@ -1,3 +1,9 @@
+
+// p/ palavras-chave
+var desconsiderados = ["de", "da", "em", "por", "ou", "a",
+ "com", "e", "as", "do", "para", "o", "das", "estar", "and", "que", "será", "ter",
+  "na", "no", "como", "um", "uma", "irá", "é"
+ ];
 function navega_item(e) {
  window.location = e.getElementsByTagName("a")[0].href;
 }

@@ -10,6 +10,7 @@ function search()
   $("#inner_resultados").css({display:'none',visibility:'hidden'});
   $("#muitos_resultados").css({display:'none',visibility:'hidden'});
   $("#inner_resultados").empty();
+  $("#pesquisando").toggleClass();
   comparacao = new Object();
   var valor = $("#texto_busca").val();
   // figure out fields
@@ -97,7 +98,7 @@ function get(data)
       {
         var filtro_bate = false;
         for (var comp in comparacao)
-          if (valores[comp].search(comparacao[comp]) != -1)
+          if (valores[comp].toLowerCase().search(comparacao[comp].toLowerCase()) != -1)
           {
             filtro_bate = true;
             break;
@@ -112,7 +113,7 @@ function get(data)
     }
 
   });
- 
+ $("#pesquisando").toggleClass();
   // imprime resultados
   if (n_resultados <= MAX_RESULTADOS)
   {

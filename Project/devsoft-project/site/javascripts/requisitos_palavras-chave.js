@@ -3,9 +3,9 @@
  */
 
 var MIN_PALAVRAS = 40;
-var MIN_TERMOS = 20;
-var MAX_TERMOS_PALAVRAS = 5;
-var desconsiderados = ["de", "da", "em", "por", "ou", "a", "com", "e", "as", "do", "para", "o", "das", "estar", "and", "que", "será", "ter"];
+var MIN_TERMOS = 10;
+var MAX_TERMOS_PALAVRAS = 2;
+
 
 var palavras_chave = new Object();
 var termos_chave = new Object();
@@ -19,6 +19,7 @@ $.fn.tagcloud.defaults = {
 
 
 $(document).ready(function(){
+  $("#carregando").toggleClass();
   load_json(get);
   
 });
@@ -70,8 +71,8 @@ function get(data)
         if (valores["Requisitos:"] != null && valores["Requisitos:"] != "")
         {
         	// le palavras
-        	var palavras_sep = valores["Requisitos:"].toString().toLowerCase().replace(/[\.,:•]/g," ").replace(/\-(?=[^a-z]{0,})/g," ").replace(/\s{2,}/g," ").split(" ");
-        	for (var i = 0; i < palavras_sep.length; i++)
+        	var palavras_sep = valores["Requisitos:"].toString().toLowerCase().replace(/[\.,:•\*]/g," ").replace(/\-(?=[^a-z\u00C0-\u00ff]{0,})/g," ").replace(/\s{2,}/g," ").split(" ");
+          for (var i = 0; i < palavras_sep.length; i++)
         	{
         		if (temp_palavras_chave[palavras_sep[i]] == "")
         			continue;
@@ -90,17 +91,37 @@ function get(data)
         		else
         			temp_palavras_chave[palavras_sep[i]]++;
         	}
-        	// cria os termos
-        	for (var i = 2; i < MAX_TERMOS_PALAVRAS; i++)
+        	// cria os termos fazendo todas as combinações
+          var termos_sep = valores["Requisitos:"].toString().toLowerCase().match(/([a-z\u00C0-\u00ff]+)|([\.\,])/g);
+          if (termos_sep == null)
+            return 1;
+          for (var i = 2; i <= MAX_TERMOS_PALAVRAS; i++)
         	{
-        		var termos_sep = valores["Requisitos:"].toString().toLowerCase().match
-        	}
-           
-        }
-    }
+            for (var j = 0; j < termos_sep.length; j++)
+            {
+              var termo = "";
 
+              for (k = j; k < termos_sep.length && (k-j+1) <= i; k++)
+              {
+                if (termos_sep[k].match(/[\.\,]/g) != null)
+                  break;
+                termo = termo + termos_sep[k] + " ";
+              }
+              // termo válido
+              if (termo.trim().split(" ").length == i)
+              {
+                termo = termo.trim();
+                if (typeof temp_termos_chave[termo] == 'undefined')
+                  temp_termos_chave[termo] = 1;
+                else
+                  temp_termos_chave[termo]++;
+              }
+            }
+          }		
+        }    
+    }
   });
-  // encontra os N maiores
+  // encontra os N maiores das palavras
   palavras_chave = new Object();
   var maior = 1;
   todas_palavras = [];
@@ -120,9 +141,56 @@ function get(data)
   		todas_palavras.push(palavra_recorrente);
   		delete temp_palavras_chave[palavra_recorrente];
   	}
+
   }
   todas_palavras.sort();
-  // escreve as tags
+
+  // encontra os N maiores dos termos
+  termos_chave = new Object();
+  maior = 1;
+  todos_termos = [];
+  for (var i = 0; i < MIN_TERMOS && maior != 0 ; i++)
+  {
+    var termo_recorrente = "";
+    maior = 0;
+    for (var prop_cmp in temp_termos_chave)
+      if (temp_termos_chave[prop_cmp] > maior)
+      {
+        maior = temp_termos_chave[prop_cmp];
+        termo_recorrente = prop_cmp;
+      }
+    if (maior != 0)
+    {
+      // verifica se termo não está contido em outro ou se contém outro
+      var encontrou_igual = false;
+      for (j in todos_termos)
+      {
+        if (todos_termos[j].match(termo_recorrente) != null  && termos_chave[termo_recorrente] != maior)
+        {
+          encontrou_igual = true
+          break;
+        }
+        if (termo_recorrente.match(todos_termos[j]) != null && termos_chave[termo_recorrente] != maior)
+        {
+          todos_termos.splice(j, 1);
+          i--;
+        }
+      }
+      if (encontrou_igual)
+      {
+        i--;
+        continue;
+      }
+      termos_chave[termo_recorrente] = maior;
+      todos_termos.push(termo_recorrente);
+      delete temp_termos_chave[termo_recorrente];
+      
+
+    }
+  }
+  todos_termos.sort();
+
+  // escreve as tags das palavras
   for (i in todas_palavras)
   {
   	var a = document.createElement("a");
@@ -133,12 +201,24 @@ function get(data)
   	$('#palavras_chave').append(" ");
   }
 
+   // escreve as tags dos termos
+  for (i in todos_termos)
+  {
+    var a = document.createElement("a");
+    a.setAttribute("href","#");
+    a.setAttribute("rel", termos_chave[todos_termos[i]]);
+    a.appendChild(document.createTextNode(todos_termos[i]));
+    $('#palavras_agrupadas_chave').append(a);
+    $('#palavras_agrupadas_chave').append(" ");
+  }
+
   for (var i = 0; i < desconsiderados.length; i++)
   {
   	$("#desconsiderados").append(desconsiderados[i] + " ");
   }
 
-
+  $("#carregando").toggleClass();
+  $("#main-content").toggleClass();
   // desenha a tag_cloud
   $('#palavras_chave a').tagcloud();
   $('#palavras_agrupadas_chave a').tagcloud();

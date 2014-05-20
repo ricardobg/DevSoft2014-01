@@ -42,6 +42,7 @@ applyTemplate = function(msg) {
 }
 // Load data when ready
 $(window).load(function() {
+    $("#carregando").toggleClass();
     load_json(get); 
 });
 
@@ -107,6 +108,8 @@ function get(data)
     }
 
   });
+  $("#carregando").toggleClass();
+  $("#main-content").toggleClass();
   // Coloca valores na tela
   $("#data_coleta").text(data_coleta);
   $("#paginas_acessadas").text(paginas_acessadas);

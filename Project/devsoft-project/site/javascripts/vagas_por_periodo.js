@@ -41,6 +41,7 @@ function max(sequence)
 
 // Load data when ready
 $(document).ready(function(){
+  $("#carregando").toggleClass();
   load_json(get);
   
 });
@@ -136,7 +137,8 @@ function get(data)
   // arruma valores do ano
   for (var i = menor_data[2]; i <= maior_data[2]; i++)
     anos[i-menor_data[2]] = (typeof temp_anos[i] == "undefined") ? 0 : temp_anos[i];
-
+  $("#main-content").toggleClass();
+  $("#carregando").toggleClass();
   // Coloca valores na tela
   $("#data_inicial").text((menor_data[0]<10 ? "0" : "") + menor_data[0] + "/" 
                         + (menor_data[1]<10 ? "0" : "") + menor_data[1] + "/" + menor_data[2]);
