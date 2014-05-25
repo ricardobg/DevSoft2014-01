@@ -58,10 +58,11 @@ function get(data)
   anos = new Array();
 
   $.each(data, function(key, field) {
-    if (key == "data_coleta")
+    if (key == "data_coleta" || key == "paginas_acessadas")
+    {
+      delete data[key];
       return true;
-    if (key == "paginas_acessadas")
-      return true;
+    }
 
     var valores =  {};
     var vazio = true;
@@ -76,8 +77,8 @@ function get(data)
       var igual = -1;
        $.each(data, function(key_compare, field_compare)
        {
-          if (key_compare == key || key_compare == "data_coleta" || key_compare == "paginas_acessadas")
-            return true;
+          if (key_compare == key)
+            return false;
           var tudo_igual = true;
           $.each(field_compare, function(inner_key_compare, inner_field_compare) {
             if (valores[inner_key_compare] != inner_field_compare)
@@ -93,7 +94,7 @@ function get(data)
           }
         });
        // apenas vagas válidas com data
-      if ((igual != -1 && key < igual) || igual == -1)
+      if (igual == -1)
         if (valores["Data do Anúncio:"] != null && valores["Data do Anúncio:"] != "")
         {
 

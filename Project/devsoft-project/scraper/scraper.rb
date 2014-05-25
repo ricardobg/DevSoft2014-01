@@ -93,8 +93,11 @@ puts 'Loading jobs...'
 # Load each internship data
 
 porcentagem = 0.00;
+each_10 = 0
 job_list.each do |job|
-    print "\r" + porcentagem.to_s + "%";
+    if each_10 % 10 == 0
+        print "\r" + porcentagem.round(2).to_s + "%               "
+    end
     mechanize.get("http://estagios.pcs.usp.br/aluno/vagas/exibirVaga.aspx?id=" + job.code)
     doc = mechanize.page.parser
     selector = 'div.formulario[1] table tr'
@@ -105,6 +108,7 @@ job_list.each do |job|
         end
     end
     porcentagem += 100.0/MAX_SEARCH;
+    each_10 += 1
 end
 puts "\n100%"
 

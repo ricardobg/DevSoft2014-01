@@ -2,9 +2,23 @@
 var comparacao = new Object();
 var resultados = new Object();
 var start_time = 0, end_time = 0;
-var MAX_RESULTADOS = 30;
+var MAX_RESULTADOS = 40;
+var searching = false;
+// set function to search when enter is pressed
+
+$(window).load(function() {
+  $("#texto_busca").keypress(function(e) {
+    if(e.which == 13) {
+        search();
+    }
+  });
+});
+
 function search()
 {
+  if (searching)
+    return;
+  searching = true;
   start_time = new Date().getTime();
   $("#resultados").css({display:'none',visibility:'hidden'});
   $("#inner_resultados").css({display:'none',visibility:'hidden'});
@@ -58,13 +72,12 @@ function get(data)
   resultados = new Object();
   var n_resultados = 0;
   $.each(data, function(key, field) {
-    if (key == "data_coleta")
+    if (key == "data_coleta" || key == "paginas_acessadas")
+    {
+      delete data[key];
       return true;
-    if (key == "paginas_acessadas")
-      return true;
-
+    }
     var valores =  {};
-    
     var vazio = true;
     $.each(field, function(inner_key, inner_field) {
       valores[inner_key] = inner_field;
@@ -77,8 +90,8 @@ function get(data)
       var igual = -1;
        $.each(data, function(key_compare, field_compare)
        {
-          if (key_compare == key || key_compare == "data_coleta" || key_compare == "paginas_acessadas")
-            return true;
+          if (key_compare == key)
+            return false;
           var tudo_igual = true;
           $.each(field_compare, function(inner_key_compare, inner_field_compare) {
             if (valores[inner_key_compare] != inner_field_compare)
@@ -94,7 +107,7 @@ function get(data)
           }
         });
        // apenas vagas válidas
-      if ((igual != -1 && key < igual) || igual == -1)
+      if (igual == -1)
       {
         var filtro_bate = false;
         for (var comp in comparacao)
@@ -144,9 +157,9 @@ function get(data)
     $("#muitos_resultados").css({display:'inline',visibility:'visible'});
   // coloca na tela os resultados
   end_time = new Date().getTime();
-  var execution_time = parseInt((end_time - start_time)/1000,10);
+  var execution_time = parseInt((end_time - start_time)/1000.0 + 0.5,10);
   $("#resultados").css({display:'inherit',visibility:'inherit'});
   $("#tempo_busca").text(execution_time + "s");
   $("#vagas_encontradas").text(n_resultados);
- 
+  searching = false;
 }

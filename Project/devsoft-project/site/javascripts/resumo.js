@@ -54,11 +54,13 @@ function get(data)
     if (key == "data_coleta")
     {
       data_coleta = field;
+      delete data[key];
       return true;
     }
     if (key == "paginas_acessadas")
     {
       paginas_acessadas = field;
+      delete data[key];
       return true;
     }
     total_vagas++;
@@ -77,8 +79,8 @@ function get(data)
       var igual = -1;
        $.each(data, function(key_compare, field_compare)
        {
-          if (key_compare == key || key_compare == "data_coleta" || key_compare == "paginas_acessadas")
-            return true;
+          if (key_compare == key)
+            return false;
           var tudo_igual = true;
           $.each(field_compare, function(inner_key_compare, inner_field_compare) {
             if (valores[inner_key_compare] != inner_field_compare)
@@ -96,11 +98,7 @@ function get(data)
        // encontrou igual
        if (igual != -1)
        {
-          // vaga ainda não marcada como válida
-          if (key < igual)
-            validas++;
-          else
-            duplicadas++;
+          duplicadas++;
        }
        // vaga única
        else

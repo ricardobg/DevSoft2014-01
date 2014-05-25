@@ -37,11 +37,11 @@ function get(data)
   var temp_termos_chave = new Object();
 
   $.each(data, function(key, field) {
-    if (key == "data_coleta")
+    if (key == "data_coleta" || key == "paginas_acessadas")
+    {
+      delete data[key];
       return true;
-    if (key == "paginas_acessadas")
-      return true;
-
+    }
     var valores =  {};
     var vazio = true;
     $.each(field, function(inner_key, inner_field) {

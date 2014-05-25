@@ -65,50 +65,48 @@
 
   <div id="main-content">
     <h2>Busca</h2>
-    <form name="form_busca" action="busca_resultados.html">
-      <div id="campos_considerados">
-        <p> <strong>Campos Considerados:</strong> </p>
-         <div  class="row">
-          <div class="col-md-2">
-            <input type="checkbox" name="habilitacao" > Habilitação
-          </div>
-           <div class="col-md-2">
-            <input type="checkbox" name="empresa" > Empresa
-          </div>
-           <div class="col-md-2">
-            <input type="checkbox" name="descricao" > Descrição
-          </div>
-           <div class="col-md-2">
-            <input type="checkbox" name="beneficios" > Benefícios
-          </div>
-           <div class="col-md-2">
-            <input type="checkbox" name="numero_de_vagas" > Número de vagas
-          </div>
+    <div id="campos_considerados">
+      <p> <strong>Campos Considerados:</strong> </p>
+       <div  class="row">
+        <div class="col-md-2">
+          <input type="checkbox" name="habilitacao" > Habilitação
         </div>
-        <div  class="row">
-          <div class="col-md-2">
-            <input type="checkbox" name="titulo" checked> Título
-          </div>
-           <div class="col-md-2">
-            <input type="checkbox" name="area_de_atuacao" > Área de Atuação
-          </div>
-           <div class="col-md-2">
-            <input type="checkbox" name="requisitos" > Requisitos
-          </div>
-           <div class="col-md-2">
-            <input type="checkbox" name="contatos" > Contatos
-          </div>
+         <div class="col-md-2">
+          <input type="checkbox" name="empresa" > Empresa
+        </div>
+         <div class="col-md-2">
+          <input type="checkbox" name="descricao" > Descrição
+        </div>
+         <div class="col-md-2">
+          <input type="checkbox" name="beneficios" > Benefícios
+        </div>
+         <div class="col-md-2">
+          <input type="checkbox" name="numero_de_vagas" > Número de vagas
         </div>
       </div>
       <div  class="row">
-        <div class="col-md-9">
-          <input onfocus="campo_focus(this,'Digite o termo de busca')" onblur="campo_blur(this, 'Digite o termo de busca')" name="texto_busca" id="texto_busca" class="campo_vazio" type="text" maxlength="200" value="Digite o termo de busca">
+        <div class="col-md-2">
+          <input type="checkbox" name="titulo" checked> Título
         </div>
-        <div class="col-md-3">
-          <input type="button" value="Pesquisar" onclick="search();">
+         <div class="col-md-2">
+          <input type="checkbox" name="area_de_atuacao" > Área de Atuação
+        </div>
+         <div class="col-md-2">
+          <input type="checkbox" name="requisitos" > Requisitos
+        </div>
+         <div class="col-md-2">
+          <input type="checkbox" name="contatos" > Contatos
         </div>
       </div>
-    </form>
+    </div>
+    <div  class="row">
+      <div class="col-md-9">
+        <input onfocus="campo_focus(this,'Digite o termo de busca')" onblur="campo_blur(this, 'Digite o termo de busca')" name="texto_busca" id="texto_busca" class="campo_vazio" type="text" maxlength="200" value="Digite o termo de busca">
+      </div>
+      <div class="col-md-3">
+        <input type="button" value="Pesquisar" onclick="search();">
+      </div>
+    </div>
     <div class="inv" id="pesquisando">
       <h4>Pesquisando...</h4>
     </div>
