@@ -32,7 +32,7 @@ function get(data)
   var temp_termos_chave = new Object();
 
   $.each(data, function(key, field) {
-    if (key == "data_coleta" || key == "paginas_acessadas"))
+    if (key == "data_coleta" || key == "paginas_acessadas")
     {
       delete data[key];
       return true;
